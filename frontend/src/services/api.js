@@ -67,7 +67,9 @@ export const serviceAPI = {
 
 export const bookingAPI = {
   createBooking: (data) => api.post('/bookings', data),
-  getUserBookings: () => api.get('/bookings'),
+  getUserBookings: (status) => api.get('/bookings', {
+    params: { status: status || undefined }
+  }),
   getBookingById: (id) => api.get(`/bookings/${id}`),
 };
 

@@ -18,6 +18,7 @@ import Favorites from './pages/Favorites/Favorites';
 
 // Utils
 import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './components/Toast/Toast';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 /**
@@ -27,17 +28,18 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="app">
-          <Navbar />
-          <main className="main-content">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+      <ToastProvider>
+        <Router>
+          <div className="app">
+            <Navbar />
+            <main className="main-content">
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
 
-              {/* Protected Routes */}
+                {/* Protected Routes */}
               <Route path="/profile" element={
                 <PrivateRoute>
                   <Profile />
@@ -81,6 +83,7 @@ function App() {
           <Footer />
         </div>
       </Router>
+      </ToastProvider>
     </AuthProvider>
   );
 }

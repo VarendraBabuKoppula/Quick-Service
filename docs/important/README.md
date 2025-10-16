@@ -19,37 +19,37 @@ A production-ready three-tier service marketplace platform connecting customers 
 
 ## Features (Phase 1 - User Module)
 
-✅ **User Authentication**
+ **User Authentication**
 - Registration with email/password
 - JWT-based login with 24-hour token expiration
 - BCrypt password hashing
 
-✅ **Profile Management**
+ **Profile Management**
 - View and update personal information
 - Secure profile access
 
-✅ **Service Discovery**
+ **Service Discovery**
 - Browse all available services
 - Advanced search with filters (category, city, price range)
 - Pagination support
 - Service details with ratings and reviews
 
-✅ **Booking System**
+ **Booking System**
 - Create bookings with date/time selection
 - Automatic price calculation
 - Booking status tracking (PENDING, CONFIRMED, COMPLETED, CANCELLED)
 - View booking history
 
-✅ **Favorites**
+ **Favorites**
 - Add/remove services to favorites
 - Quick access to preferred services
 
-✅ **Address Management**
+ **Address Management**
 - Multiple address support
 - Set default address
 - Address types (HOME, WORK, OTHER)
 
-✅ **Review & Rating System**
+ **Review & Rating System**
 - Rate services (1-5 stars)
 - Write detailed reviews
 - View service reviews
@@ -120,12 +120,12 @@ spring.datasource.password=your_password
 **Last Updated**: October 16, 2025
 
 ### Completed
-- ✅ Phase 1 - User Module (All 9 features)
-- ✅ Professional SLF4J logging
-- ✅ Modern UI/UX with consistent styling
-- ✅ Complete CRUD operations
-- ✅ JWT authentication
-- ✅ Database persistence
+-  Phase 1 - User Module (All 9 features)
+-  Professional SLF4J logging
+-  Modern UI/UX with consistent styling
+-  Complete CRUD operations
+-  JWT authentication
+-  Database persistence
 
 ### Pending
 - ⏳ Phase 2 - Vendor Module

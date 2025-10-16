@@ -49,7 +49,7 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     List<Service> findAllByVendorId(@Param("vendorId") Long vendorId);
     
     @Query("SELECT s FROM Service s WHERE s.isAvailable = true AND " +
-           "(:category IS NULL OR LOWER(s.category) LIKE LOWER(CONCAT('%', :category, '%'))) AND " +
+           "(:category IS NULL OR CAST(s.category AS string) LIKE UPPER(:category)) AND " +
            "(:city IS NULL OR LOWER(s.city) LIKE LOWER(CONCAT('%', :city, '%'))) AND " +
            "(:location IS NULL OR LOWER(s.address) LIKE LOWER(CONCAT('%', :location, '%'))) AND " +
            "(:minPrice IS NULL OR s.price >= :minPrice) AND " +

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { userAPI } from '../../services/api';
+import { useToast } from '../../components/Toast/Toast';
 import './Profile.css';
 
 const Profile = () => {
+  const toast = useToast();
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,11 +59,14 @@ const Profile = () => {
 
     try {
       await userAPI.updateProfile(formData);
+      toast.success('Profile updated successfully');
       setSuccess('Profile updated successfully!');
       setIsEditing(false);
       fetchProfile();
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update profile');
+      const errorMsg = err.response?.data?.message || 'Failed to update profile';
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 

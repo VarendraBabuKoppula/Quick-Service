@@ -43,9 +43,14 @@ public class AuthService {
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFullName(request.getName());
-        user.setPhone(request.getContact() != null ? request.getContact() : "");
-        user.setAddress(request.getLocation() != null ? request.getLocation() : "");
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setFullName(request.getFirstName() + " " + request.getLastName());
+        user.setPhone(request.getPhone());
+        user.setAddress(request.getAddress() != null ? request.getAddress() : "");
+        user.setCity(request.getCity() != null ? request.getCity() : "");
+        user.setState(request.getState() != null ? request.getState() : "");
+        user.setZipCode(request.getPostalCode() != null ? request.getPostalCode() : "");
         user.setRole(User.UserRole.USER);
         user.setIsActive(true);
 

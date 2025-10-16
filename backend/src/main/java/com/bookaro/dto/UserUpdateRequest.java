@@ -10,6 +10,12 @@ public class UserUpdateRequest {
     @Size(min = 2, max = 100, message = "Full name must be between 2 and 100 characters")
     private String fullName;
     
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
+    private String firstName;
+    
+    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
+    private String lastName;
+    
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits")
     private String phone;
     
@@ -24,6 +30,9 @@ public class UserUpdateRequest {
     
     @Pattern(regexp = "^[0-9]{6}$", message = "Zip code must be 6 digits")
     private String zipCode;
+    
+    @Pattern(regexp = "^[0-9]{6}$", message = "Postal code must be 6 digits")
+    private String postalCode;
     
     private Double latitude;
     

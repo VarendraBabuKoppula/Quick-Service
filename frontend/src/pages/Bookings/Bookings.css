@@ -55,6 +55,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: var(--spacing-xl);
+  align-items: start;
+  grid-auto-rows: min-content;
 }
 
 .booking-card {
@@ -62,16 +64,19 @@
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
   border-left: 4px solid var(--royal-blue);
+  height: 100%;
+  position: relative;
+  will-change: transform;
 }
 
 .booking-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 

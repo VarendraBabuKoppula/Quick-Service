@@ -1,5 +1,198 @@
 # Bookaro Development Instructions
 
+## CRITICAL: Operational Rules (MUST FOLLOW)
+
+### Terminal Management - STRICT RULES
+**NEVER violate these terminal rules:**
+
+1. **Separate Terminals for Each Service** (MANDATORY)
+   - Backend: ONE dedicated terminal (NEVER touch during testing)
+   - Frontend: ONE dedicated terminal (NEVER touch during testing)
+   - Work/Testing: SEPARATE terminal for all other commands
+   - NEVER mix backend/frontend with testing commands in same terminal
+
+2. **NO Background Jobs/Processes** (STRICTLY FORBIDDEN)
+   - NEVER use `Start-Job`, `Start-Process -NoNewWindow`, or background execution
+   - Reason: User needs to SEE terminal output to identify problems
+   - User's feedback is critical for learning and debugging
+   - Visible terminals = Better collaboration and learning
+
+3. **Terminal Usage Pattern** (ALWAYS FOLLOW)
+   ```
+   Terminal 1 (pwsh): Backend ONLY
+   $ cd D:\Springboard\backend
+   $ java -jar target/bookaro-backend-1.0.2.jar
+   [LEAVE RUNNING - DON'T TOUCH]
+   
+   Terminal 2 (node/pwsh): Frontend ONLY  
+   $ cd D:\Springboard\frontend
+   $ npm start
+   [LEAVE RUNNING - DON'T TOUCH]
+   
+   Terminal 3 (pwsh): Work/Testing/Git/Everything Else
+   $ cd D:\Springboard
+   $ .\test_comprehensive.ps1
+   $ git status
+   $ mvn package
+   [USE THIS FOR ALL OTHER COMMANDS]
+   ```
+
+4. **Before Testing - Checklist** (MANDATORY VERIFICATION)
+   - ✓ Is backend running in Terminal 1? (Check http://localhost:8081/api/v1/services)
+   - ✓ Is frontend running in Terminal 2? (Check http://localhost:3000)
+   - ✓ Am I using Terminal 3 for testing? (NOT Terminal 1 or 2)
+   - ✓ Have I verified backend/frontend are using LATEST code?
+
+### Work Until Perfect Rule (ABSOLUTE)
+**I will NOT stop until everything is 100% correct:**
+- If tests fail: Debug and fix until ALL pass
+- If bugs found: Fix immediately, don't postpone
+- If mistakes made: Learn, document, never repeat
+- If user points out issues: Acknowledge, fix, add rule
+- NEVER leave work incomplete or "good enough"
+- NEVER assume something works without verification
+
+### Learning & Documentation Rules
+1. **After Every Mistake**:
+   - Acknowledge the mistake clearly
+   - Explain what I did wrong
+   - Document the correct approach
+   - Add NEW RULE to this file to prevent repeat
+   - Update this section with learnings
+
+2. **Mistake Pattern Recognition**:
+   - Track common mistakes I make
+   - Create explicit rules to prevent them
+   - Reference rules when making decisions
+   - Review rules before major operations
+
+3. **Continuous Improvement**:
+   - This file grows with every session
+   - Rules get stricter, not looser
+   - Past mistakes become permanent guards
+   - User feedback is GOLD - always incorporate
+
+### Critical Lessons (Prevent Repeat Mistakes)
+
+**Terminal Management Mistakes**:
+- NEVER start backend/frontend in same terminal as testing
+- NEVER use background jobs (`Start-Job`) - user can't see errors
+- ALWAYS verify which process is serving before testing
+- Check process start time vs JAR modification time
+
+**Git/GitHub Mistakes**:
+- NEVER commit .github/copilot-instructions.md to GitHub (internal only)
+- NEVER push *_RESULTS.md, *_STATUS*.md (temporary reports)
+- GitHub gets: README.md, QUICK_START.md, docs/important/, source code
+- Local only: My rules, test results, status reports, archive
+
+### Fix Verification & Testing Rules (MANDATORY)
+
+**BEFORE claiming a fix is complete:**
+
+1. **Code Verification Checklist**:
+   - Read the ENTIRE modified file to verify changes applied correctly
+   - Check for any syntax errors or typos introduced
+   - Verify imports are correct and complete
+   - Ensure no code was accidentally deleted or corrupted
+   - Check that related files are also updated (DTOs, Services, Controllers)
+
+2. **Build Verification** (CRITICAL):
+   - ALWAYS rebuild backend after ANY Java code changes
+   - Command: `mvn clean package -DskipTests`
+   - Verify BUILD SUCCESS message
+   - Check JAR file exists and has recent timestamp
+   - Note the version number in build output
+
+3. **Backend API Testing** (BEFORE claiming fix works):
+   - Start fresh backend server (kill old processes first)
+   - Wait for "Started BookaroApplication" message
+   - Test EACH fixed endpoint with real HTTP requests
+   - Use Invoke-RestMethod or Invoke-WebRequest in PowerShell
+   - Verify response structure matches expected format
+   - Check for errors in backend console logs
+
+4. **Frontend Integration Testing**:
+   - Start fresh frontend server
+   - Open browser and test the actual UI feature
+   - Check browser console for JavaScript errors
+   - Verify network tab shows successful API calls (200 status)
+   - Test both success and error scenarios
+
+5. **End-to-End Testing Sequence** (For Registration/Auth fixes):
+   ```powershell
+   # 1. Test Registration API directly
+   $body = @{
+       firstName = "Test"
+       lastName = "User"
+       email = "test$(Get-Random)@test.com"
+       password = "password123"
+       phone = "+1234567890"
+       address = "123 Main St"
+       city = "Mumbai"
+       state = "Maharashtra"
+       postalCode = "400001"
+   } | ConvertTo-Json
+   
+   $response = Invoke-RestMethod -Uri "http://localhost:8081/api/v1/auth/register" `
+       -Method POST -Body $body -ContentType "application/json"
+   
+   # 2. Verify response has token and user data
+   $response.success  # Should be true
+   $response.data.token  # Should exist
+   $response.data.firstName  # Should match input
+   
+   # 3. Test Login with same credentials
+   $loginBody = @{
+       email = $response.data.email
+       password = "password123"
+   } | ConvertTo-Json
+   
+   $loginResponse = Invoke-RestMethod -Uri "http://localhost:8081/api/v1/auth/login" `
+       -Method POST -Body $loginBody -ContentType "application/json"
+   
+   # 4. Verify login returns valid token
+   $loginResponse.success  # Should be true
+   ```
+
+6. **Documentation Verification**:
+   - Search ALL markdown files for emojis: `grep -r "🚀|✅|🐛|❤️|🏠" *.md`
+   - Check port numbers in docs match application.properties
+   - Verify test credentials are accurate
+   - Ensure no "TODO" or "FIXME" comments in critical sections
+
+7. **NEVER Skip Testing** (ABSOLUTE RULE):
+   - If I claim "registration is fixed", I MUST test registration
+   - If I claim "filtering works", I MUST test filtering with real API call
+   - If I claim "emojis removed", I MUST grep search to verify
+   - NEVER say "should work" or "will work" - only "VERIFIED WORKING"
+
+8. **Test Evidence Requirements**:
+   - Show the actual test command executed
+   - Show the actual response received
+   - Show any error messages (or confirm no errors)
+   - State clearly: "TESTED AND VERIFIED" or "NOT YET TESTED"
+
+**Fix Verification Workflow**:
+```
+1. Make code changes
+2. Rebuild backend (mvn clean package)
+3. Kill old processes
+4. Start fresh backend in Terminal 1
+5. Start fresh frontend in Terminal 2
+6. Run PowerShell API tests in Terminal 3
+7. Test in browser UI
+8. Check browser console and network tab
+9. Only then claim "FIX VERIFIED"
+```
+
+**Common Testing Mistakes to Avoid**:
+- Testing against OLD backend version (check JAR timestamp)
+- Not waiting for backend to fully start before testing
+- Assuming code works without running actual test
+- Only testing success case (must test error cases too)
+- Not checking browser console for JavaScript errors
+
 ## Project Overview
 Bookaro is a three-tier service marketplace platform (Spring Boot + React + PostgreSQL) connecting customers with service providers. Currently in Phase 1 (User Module) - production-ready for customer-facing features.
 
@@ -50,7 +243,7 @@ Bookaro is a three-tier service marketplace platform (Spring Boot + React + Post
 
 ### UI/UX Requirements
 - **Creative Freedom**: Exercise creativity for modern, responsive user experiences
-- **Current Theme**: Deep Navy Blue (#1a2332), Bright Royal Blue (#2563eb), White (#ffffff), Light Gray (#e5e7eb)
+- **Current Theme**: Deep Navy Blue, Bright Royal Blue, White, Light Gray (color codes: 1a2332, 2563eb, ffffff, e5e7eb)
 - **Professional Design**: Clean, business-appropriate design without decorative elements
 
 ## Critical Architecture Decisions

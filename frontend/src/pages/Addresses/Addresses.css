@@ -18,18 +18,40 @@
   font-size: 2rem;
 }
 
-/* Address Form Card */
+/* Address Form Card - Modern Design */
 .address-form-card {
   background: var(--white);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   padding: var(--spacing-2xl);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   margin-bottom: var(--spacing-2xl);
+  border: 2px solid var(--royal-blue);
+  position: relative;
+  overflow: hidden;
+}
+
+.address-form-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--royal-blue) 0%, #60a5fa 100%);
 }
 
 .address-form-card h2 {
   color: var(--navy-blue);
   margin-bottom: var(--spacing-xl);
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.address-form-card h2::before {
+  font-size: 1.3rem;
 }
 
 .form-row {
@@ -100,106 +122,208 @@
   margin-top: var(--spacing-xl);
 }
 
-/* Address Cards */
+/* Address Cards - Modern Card-Based Layout */
 .addresses-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: var(--spacing-xl);
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: var(--spacing-2xl);
+  align-items: start;
 }
 
 .address-card {
   background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  border-radius: var(--radius-xl);
+  padding: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
 }
 
 .address-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  border-color: var(--royal-blue);
 }
 
+/* Card Header with Badges */
 .address-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 2px solid #e5e7eb;
+  gap: var(--spacing-md);
 }
 
 .address-type-badge {
   background: var(--royal-blue);
   color: var(--white);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
 }
 
 .default-badge {
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: var(--white);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
+.default-badge::before {
+  content: "★";
+  font-size: 0.9rem;
+}
+
+/* Address Details Section */
 .address-details {
-  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-xl);
+  background: var(--white);
 }
 
 .address-line {
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-xs);
-  line-height: 1.5;
+  color: var(--navy-blue);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.7;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.address-line:first-child {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--navy-blue);
+}
+
+.address-line:last-child {
+  margin-bottom: var(--spacing-md);
 }
 
 .address-landmark {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-style: italic;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: #f9fafb;
+  border-left: 3px solid var(--royal-blue);
+  border-radius: var(--radius-sm);
+  margin-top: var(--spacing-md);
 }
 
+.address-landmark::before {
+  content: " ";
+  margin-right: 4px;
+}
+
+/* Action Buttons - Grouped and Aligned */
 .address-actions {
   display: flex;
   gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
   flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .btn-sm {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 2px solid;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .btn-danger {
   background: #ef4444;
   color: var(--white);
-  border: 2px solid #ef4444;
+  border-color: #ef4444;
 }
 
 .btn-danger:hover {
   background: #dc2626;
   border-color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.btn-outline.btn-sm {
+  background: transparent;
+  color: var(--royal-blue);
+  border-color: var(--royal-blue);
+}
+
+.btn-outline.btn-sm:hover {
+  background: var(--royal-blue);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
 }
 
 .no-addresses {
   text-align: center;
-  padding: var(--spacing-2xl);
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 2px dashed #d1d5db;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.no-addresses::before {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: var(--spacing-lg);
+  opacity: 0.6;
 }
 
 .no-addresses p {
   color: var(--text-secondary);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
-.no-addresses p:first-child {
-  font-size: 1.2rem;
+.no-addresses p:first-of-type {
+  font-size: 1.4rem;
   color: var(--navy-blue);
-  font-weight: 600;
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+}
+
+.no-addresses .btn {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  font-size: 1rem;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.no-addresses .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
 }
 
 /* Responsive Design */
@@ -221,4 +345,52 @@
   .form-actions .btn {
     width: 100%;
   }
+}
+
+/* Clean Badge Styles (No Emojis) */
+.address-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.address-badge.home {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.address-badge.office {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.address-badge.other {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.address-badge.default {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
+}
+
+.address-badge.default::before {
+  content: "DEFAULT - ";
+  font-weight: 700;
+}
+
+/* Landmark without emoji */
+.address-landmark {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.address-landmark::before {
+  content: "Landmark: ";
+  font-weight: 600;
+  color: var(--navy-blue);
 }

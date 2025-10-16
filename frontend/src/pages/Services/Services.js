@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { serviceAPI, favoriteAPI } from '../../services/api';
 import './Services.css';
@@ -24,22 +24,16 @@ const Services = () => {
   const [cities, setCities] = useState([]);
   const [favoriteIds, setFavoriteIds] = useState(new Set());
 
-  useEffect(() => {
-    fetchCities();
-    fetchFavorites();
-  }, []);
-
-  useEffect(() => {
-    fetchServices();
-  }, [page, sortBy, sortDir]);
-
   const fetchFavorites = async () => {
     try {
       const response = await favoriteAPI.getFavorites();
-      const ids = new Set(response.data.data.map(fav => fav.service.id));
+      // FIX: response.data.data is the array of SERVICES, not favorites with nested service
+      const favServices = response.data.data || [];
+      const ids = new Set(favServices.map(fav => fav.id));
       setFavoriteIds(ids);
     } catch (err) {
       // User not logged in or no favorites, that's okay
+      console.log('No favorites loaded (user may not be logged in)');
     }
   };
 
@@ -52,7 +46,12 @@ const Services = () => {
     }
   };
 
-  const fetchServices = async () => {
+  useEffect(() => {
+    fetchCities();
+    fetchFavorites();
+  }, []);
+
+  const fetchServices = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
@@ -91,7 +90,11 @@ const Services = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchParams, page, sortBy, sortDir]);
+
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
 
   const handleToggleFavorite = async (e, serviceId) => {
     e.preventDefault();
@@ -122,10 +125,13 @@ const Services = () => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchParams({
+    const newParams = {
       ...searchParams,
       [e.target.name]: e.target.value,
-    });
+    };
+    setSearchParams(newParams);
+    // FIX: Auto-trigger search when filters change
+    setPage(0);
   };
 
   const handleSortChange = (newSortBy) => {

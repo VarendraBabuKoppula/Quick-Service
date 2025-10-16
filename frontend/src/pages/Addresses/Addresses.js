@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { addressAPI } from '../../services/api';
+import { useToast } from '../../components/Toast/Toast';
 import './Addresses.css';
 
 const Addresses = () => {
+  const toast = useToast();
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -48,15 +50,19 @@ const Addresses = () => {
     try {
       if (editingAddress) {
         await addressAPI.updateAddress(editingAddress.id, formData);
+        toast.success('Address updated successfully');
       } else {
         await addressAPI.createAddress(formData);
+        toast.success('Address added successfully');
       }
       setShowForm(false);
       setEditingAddress(null);
       resetForm();
       fetchAddresses();
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to save address');
+      const errorMsg = err.response?.data?.message || 'Failed to save address';
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 
@@ -79,9 +85,12 @@ const Addresses = () => {
     if (window.confirm('Are you sure you want to delete this address?')) {
       try {
         await addressAPI.deleteAddress(id);
+        toast.success('Address deleted successfully');
         fetchAddresses();
       } catch (err) {
-        setError('Failed to delete address');
+        const errorMsg = 'Failed to delete address';
+        setError(errorMsg);
+        toast.error(errorMsg);
       }
     }
   };
@@ -89,9 +98,12 @@ const Addresses = () => {
   const handleSetDefault = async (id) => {
     try {
       await addressAPI.setDefaultAddress(id);
+      toast.success('Default address updated');
       fetchAddresses();
     } catch (err) {
-      setError('Failed to set default address');
+      const errorMsg = 'Failed to set default address';
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 
@@ -253,8 +265,17 @@ const Addresses = () => {
         <div className="addresses-list">
           {addresses.length === 0 ? (
             <div className="no-addresses">
-              <p>No addresses saved yet.</p>
-              <p>Add your first address to make booking faster!</p>
+              <p>No Delivery Addresses Saved</p>
+              <p>
+                Save your frequently used addresses to make bookings faster and easier.
+                Add your home, office, or other locations now!
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowForm(true)}
+              >
+                Add Your First Address
+              </button>
             </div>
           ) : (
             addresses.map((address) => (

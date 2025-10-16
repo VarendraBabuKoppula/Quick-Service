@@ -14,7 +14,7 @@
 
     <groupId>com.bookaro</groupId>
     <artifactId>bookaro-backend</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>Bookaro Backend</name>
     <description>Service Marketplace Platform - Backend API</description>
 

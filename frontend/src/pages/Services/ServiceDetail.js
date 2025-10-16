@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { serviceAPI, bookingAPI, reviewAPI, favoriteAPI } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../components/Toast/Toast';
 import './ServiceDetail.css';
 
 const ServiceDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const toast = useToast();
   const [service, setService] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,6 +42,7 @@ const ServiceDetail = () => {
 
   const handleToggleFavorite = async () => {
     if (!user) {
+      toast.warning('Please login to save favorites');
       navigate('/login');
       return;
     }
@@ -48,11 +51,14 @@ const ServiceDetail = () => {
       if (isFavorite) {
         await favoriteAPI.removeFromFavorites(id);
         setIsFavorite(false);
+        toast.success('Removed from favorites');
       } else {
         await favoriteAPI.addToFavorites(id);
         setIsFavorite(true);
+        toast.success('Added to favorites');
       }
     } catch (err) {
+      toast.error('Failed to update favorites');
       setError('Failed to update favorites');
     }
   };

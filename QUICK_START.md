@@ -1,4 +1,4 @@
-# 🚀 Bookaro Quick Start Guide
+# Bookaro Quick Start Guide
 
 ## Start the Application
 
@@ -28,14 +28,14 @@ npm start
 
 ### Test New Features
 
-#### ❤️ **Favorites**
+#### Favorites
 1. Navigate to **Services** (navbar)
 2. Click the **heart icon** on any service card
 3. Navigate to **Favorites** (navbar)
 4. See your saved service
 5. Click heart icon to remove
 
-#### 🏠 **Addresses**
+#### Addresses
 1. Navigate to **Addresses** (navbar)
 2. Click **"Add New Address"**
 3. Fill the form:
@@ -91,7 +91,7 @@ SELECT COUNT(*) FROM services;
 ## Common Issues
 
 ### Backend won't start
-- Check if port 8080 is already in use
+- Check if port 8081 is already in use
 - Verify PostgreSQL is running
 - Check database credentials in `application.properties`
 
@@ -108,7 +108,7 @@ SELECT COUNT(*) FROM services;
 
 ## What to Test
 
-### ✅ Must Test
+### Must Test
 - [ ] Login/Logout
 - [ ] Create address (all 3 types: HOME, OFFICE, OTHER)
 - [ ] Set default address
@@ -120,7 +120,7 @@ SELECT COUNT(*) FROM services;
 - [ ] Create booking
 - [ ] View booking details
 
-### 📱 Also Test
+### Also Test (Mobile/UI)
 - [ ] Mobile view (resize browser to < 768px)
 - [ ] Heart icons sync across pages
 - [ ] Navigation links work
@@ -147,7 +147,7 @@ cd backend
 mvn clean package -DskipTests
 
 # Check backend is running
-Invoke-WebRequest -Uri "http://localhost:8080/api/v1/services" -Method GET
+Invoke-WebRequest -Uri "http://localhost:8081/api/v1/services" -Method GET
 
 # Check frontend is running
 Invoke-WebRequest -Uri "http://localhost:3000" -Method GET
@@ -163,20 +163,18 @@ psql -U postgres -d bookarodb -c "SELECT COUNT(*) FROM services;"
 
 ## Success Indicators
 
-✅ Backend logs show: "Started BookaroApplication"  
-✅ Frontend shows: "Compiled successfully!"  
-✅ No console errors in browser  
-✅ Can login with test credentials  
-✅ Can create address  
-✅ Can favorite a service  
-✅ Heart icons turn red when clicked  
+[WORKING] Backend logs show: "Started BookaroApplication"  
+[WORKING] Frontend shows: "Compiled successfully!"  
+[WORKING] No console errors in browser  
+[WORKING] Can login with test credentials  
+[WORKING] Can create address  
+[WORKING] Can favorite a service  
+[WORKING] Heart icons turn red when clicked  
 
 ---
 
-## 🎯 Ready to Test!
+## Ready to Test!
 
 **All features implemented and ready for testing.**
 
 Follow **TESTING_GUIDE.md** for comprehensive test coverage.
-
-**Enjoy testing! 🚀**

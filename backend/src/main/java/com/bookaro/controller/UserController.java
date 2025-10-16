@@ -39,10 +39,13 @@ public class UserController {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Update user details
-        if (request.getFullName() != null) {
+        // Update user details - handle both fullName and firstName/lastName
+        if (request.getFirstName() != null && request.getLastName() != null) {
+            user.setFullName(request.getFirstName() + " " + request.getLastName());
+        } else if (request.getFullName() != null) {
             user.setFullName(request.getFullName());
         }
+        
         if (request.getPhone() != null) {
             user.setPhone(request.getPhone());
         }
@@ -55,9 +58,14 @@ public class UserController {
         if (request.getState() != null) {
             user.setState(request.getState());
         }
-        if (request.getZipCode() != null) {
+        
+        // Handle both zipCode and postalCode for frontend compatibility
+        if (request.getPostalCode() != null) {
+            user.setZipCode(request.getPostalCode());
+        } else if (request.getZipCode() != null) {
             user.setZipCode(request.getZipCode());
         }
+        
         if (request.getLatitude() != null) {
             user.setLatitude(request.getLatitude());
         }
@@ -109,11 +117,20 @@ public class UserController {
         dto.setId(user.getId());
         dto.setEmail(user.getEmail());
         dto.setFullName(user.getFullName());
+        
+        // Split fullName into firstName and lastName for frontend compatibility
+        if (user.getFullName() != null) {
+            String[] nameParts = user.getFullName().trim().split("\\s+", 2);
+            dto.setFirstName(nameParts[0]);
+            dto.setLastName(nameParts.length > 1 ? nameParts[1] : "");
+        }
+        
         dto.setPhone(user.getPhone());
         dto.setAddress(user.getAddress());
         dto.setCity(user.getCity());
         dto.setState(user.getState());
         dto.setZipCode(user.getZipCode());
+        dto.setPostalCode(user.getZipCode()); // Frontend expects postalCode
         dto.setLatitude(user.getLatitude());
         dto.setLongitude(user.getLongitude());
         dto.setRole(user.getRole().toString());

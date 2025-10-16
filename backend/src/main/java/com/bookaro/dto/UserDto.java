@@ -11,11 +11,14 @@ public class UserDto {
     private Long id;
     private String email;
     private String fullName;
+    private String firstName;
+    private String lastName;
     private String phone;
     private String address;
     private String city;
     private String state;
     private String zipCode;
+    private String postalCode;
     private Double latitude;
     private Double longitude;
     private String role;

@@ -43,11 +43,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         this.hardcodedUsers = new HashMap<>();
 
+        // PRE-ENCODE passwords once to avoid different hashes on each call
+        String encodedUserPassword = passwordEncoder.encode("password123");
+        String encodedVendorPassword = passwordEncoder.encode("password123");
+        String encodedAdminPassword = passwordEncoder.encode("admin123");
+
         // Hardcoded USER
         hardcodedUsers.put("user@bookaro.com",
                 org.springframework.security.core.userdetails.User.builder()
                         .username("user@bookaro.com")
-                        .password(passwordEncoder.encode("password123"))
+                        .password(encodedUserPassword)
                         .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")))
                         .build()
         );
@@ -56,7 +61,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         hardcodedUsers.put("vendor@bookaro.com",
                 org.springframework.security.core.userdetails.User.builder()
                         .username("vendor@bookaro.com")
-                        .password(passwordEncoder.encode("password123"))
+                        .password(encodedVendorPassword)
                         .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_VENDOR")))
                         .build()
         );
@@ -65,7 +70,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         hardcodedUsers.put("admin@bookaro.com",
                 org.springframework.security.core.userdetails.User.builder()
                         .username("admin@bookaro.com")
-                        .password(passwordEncoder.encode("admin123"))
+                        .password(encodedAdminPassword)
                         .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")))
                         .build()
         );
@@ -84,13 +89,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         // Lazy initialize hardcoded users on first use
         initializeHardcodedUsers();
 
-        // Check hardcoded users first
+        // Check hardcoded users first - RETURN IMMEDIATELY if found
         if (hardcodedUsers != null && hardcodedUsers.containsKey(email)) {
             logger.debug("Using hardcoded credentials for: {}", email);
             return hardcodedUsers.get(email);
         }
 
-        // Try to load from database
+        // Try to load from database ONLY if NOT a hardcoded user
         User user = userRepository.findByEmailAndIsActiveTrue(email)
                 .orElseThrow(() -> {
                     logger.warn("User not found: {}", email);
@@ -98,6 +103,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 });
 
         logger.debug("User found in database: {}", user.getEmail());
+        
+        // Check if password is empty
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+            logger.error("Empty encoded password for database user: {}", email);
+            throw new UsernameNotFoundException("User has invalid password configuration");
+        }
+        
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())
                 .password(user.getPassword())
