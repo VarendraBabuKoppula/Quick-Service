@@ -89,3 +89,14 @@ documentation/
 # Old test scripts
 test_user_module.ps1
 test_user_features.ps1
+
+# Internal development documentation (NOT for GitHub)
+.github/copilot-instructions.md
+PROPER_TESTING_RESULTS.md
+FINAL_STATUS_REPORT.md
+PRODUCTION_READY_STATUS.md
+PROJECT_STATUS.md
+AUTOMATED_TEST_RESULTS.md
+COMPREHENSIVE_TEST_RESULTS.md
+*_RESULTS.md
+*_STATUS*.md
