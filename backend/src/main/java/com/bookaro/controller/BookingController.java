@@ -39,7 +39,7 @@ public class BookingController {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Service service = serviceRepository.findById(request.getServiceId())
+        Service service = serviceRepository.findByIdWithVendor(request.getServiceId())
                 .orElseThrow(() -> new RuntimeException("Service not found"));
 
         // Create booking with total amount from service price

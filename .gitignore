@@ -81,3 +81,11 @@ lerna-debug.log
 # Optional files
 .eslintcache
 .cache
+
+# Documentation (Archive)
+docs/archive/
+documentation/
+
+# Old test scripts
+test_user_module.ps1
+test_user_features.ps1

@@ -2,7 +2,6 @@ package com.bookaro.controller;
 
 import com.bookaro.dto.ApiResponse;
 import com.bookaro.dto.ServiceDto;
-import com.bookaro.dto.VendorInfoDto;
 import com.bookaro.model.Service;
 import com.bookaro.repository.ServiceRepository;
 import lombok.RequiredArgsConstructor;

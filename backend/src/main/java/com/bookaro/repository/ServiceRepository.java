@@ -66,6 +66,9 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     
     @Query("SELECT DISTINCT s.city FROM Service s WHERE s.isAvailable = true ORDER BY s.city")
     List<String> findDistinctCities();
+    
+    @Query("SELECT s FROM Service s LEFT JOIN FETCH s.vendor WHERE s.id = :id")
+    java.util.Optional<Service> findByIdWithVendor(@Param("id") Long id);
 }
 
 
