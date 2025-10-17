@@ -81,6 +81,7 @@ lerna-debug.log
 # Optional files
 .eslintcache
 .cache
+*.ps1
 
 # Documentation (Archive)
 docs/archive/

@@ -9,13 +9,13 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 if (-not (Test-Path "D:\Springboard\backend\target\bookaro-backend-1.0.3.jar")) {
     Write-Host "ERROR: Backend JAR not found!" -ForegroundColor Red
     Write-Host "Building backend..." -ForegroundColor Yellow
-    cd D:\Springboard\backend
+    Set-Location D:\Springboard\backend
     mvn clean package -DskipTests
 }
 
 Write-Host "[1/2] Starting Backend..." -ForegroundColor Cyan
 Start-Process pwsh -ArgumentList "-NoExit", "-Command", @"
-    cd D:\Springboard\backend
+    Set-Location D:\Springboard\backend
     Write-Host 'BACKEND SERVER - v1.0.3' -ForegroundColor Green
     Write-Host 'Port: 8081' -ForegroundColor Cyan
     Write-Host 'Keep this terminal open' -ForegroundColor Yellow
@@ -27,7 +27,7 @@ Start-Sleep -Seconds 15
 
 Write-Host "[2/2] Starting Frontend..." -ForegroundColor Cyan
 Start-Process pwsh -ArgumentList "-NoExit", "-Command", @"
-    cd D:\Springboard\frontend
+    Set-Location D:\Springboard\frontend
     Write-Host 'FRONTEND SERVER - React App' -ForegroundColor Green
     Write-Host 'Port: 3000' -ForegroundColor Cyan
     Write-Host 'Keep this terminal open' -ForegroundColor Yellow
