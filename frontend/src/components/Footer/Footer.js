@@ -9,10 +9,10 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container container">
         <div className="footer-section">
-          <h3 className="footer-title">Bookaro</h3>
+          <h3 className="footer-title">QuickService</h3>
           <p className="footer-description">
             Your trusted service marketplace platform. 
-            Book services easily and securely.
+            Fast Local Service Discovery and securely.
           </p>
         </div>
 
@@ -39,7 +39,7 @@ const Footer = () => {
         <div className="footer-section">
           <h4 className="footer-heading">Connect</h4>
           <p className="footer-text">
-            Email: support@bookaro.com<br />
+            Email: support@QuickService.com<br />
             Phone: +1 (555) 123-4567
           </p>
         </div>
@@ -47,7 +47,7 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <div className="container">
-          <p>&copy; {currentYear} Bookaro. All rights reserved.</p>
+          <p>&copy; {currentYear} QuickService. All rights reserved.</p>
         </div>
       </div>
     </footer>

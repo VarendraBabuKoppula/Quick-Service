@@ -16,8 +16,8 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-container container">
         <Link to="/" className="navbar-brand">
-          <span className="brand-name">Bookaro</span>
-          <span className="brand-tagline">Book Services Easily</span>
+          <span className="brand-name">Quick Service</span>
+          <span className="brand-tagline">Fast Local Service Discovery</span>
         </Link>
 
         <div className="navbar-menu">

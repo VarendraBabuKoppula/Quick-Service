@@ -57,7 +57,7 @@ const Login = () => {
       <div className="auth-container fade-in">
         <div className="auth-card">
           <h1 className="auth-title">Welcome Back</h1>
-          <p className="auth-subtitle">Sign in to continue to Bookaro</p>
+          <p className="auth-subtitle">Sign in to continue to QuickService</p>
 
           {error && <div className="alert alert-error">{error}</div>}
 

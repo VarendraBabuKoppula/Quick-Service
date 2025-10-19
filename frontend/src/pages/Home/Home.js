@@ -12,7 +12,7 @@ const Home = () => {
         <div className="container">
           <div className="hero-content fade-in">
             <h1 className="hero-title">
-              Book Services <span className="highlight">Easily</span>
+              Fast Local Service  <span className="highlight">Discovery</span>
             </h1>
             <p className="hero-subtitle">
               Your trusted marketplace for professional services.
@@ -40,7 +40,7 @@ const Home = () => {
 
       <section className="features-section">
         <div className="container">
-          <h2 className="section-title">Why Choose Bookaro?</h2>
+          <h2 className="section-title">Why Choose QuickService</h2>
           <div className="features-grid">
             <div className="feature-card fade-in">
               <div className="feature-icon-box">
